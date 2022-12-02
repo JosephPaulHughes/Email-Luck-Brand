@@ -1,0 +1,764 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"><div id="twoseven-scripts" data-info="Scripts added by TwoSeven extension" style="display: none !important; position: static !important; top: 0px !important; left: 0px !important; width: 0px !important; height: 0px !important;"><script type="text/javascript" id="__tmpScript-939474754" data-added-by-two-seven="1">(function() {
+        window.twoseven = {};
+      })();</script><script type="text/javascript" id="__tmpScript-818936703" data-added-by-two-seven="1">(function() {
+        window.twoseven.waitForDOMNode = async function t(e,t=document){e=e||{};const{type:n,value:o}=e;if(!n||!o)throw new Error("Must specify identifier");let s=o;switch(n){case"tag":s=o.toUpperCase()}if("check"!==n){const e=await i({type:"selector",value:s},[],t);if(e)return new Promise(t=>t(e))}async function i({type:e,value:t},n,o){let s;switch(e){case"tag":s=n.find(e=>e.tagName===t);break;case"selector":s=o.querySelector(t);break;case"check":for(const e of n){if(await t(e))return e}}return s}return new Promise((e,o)=>{const a=new MutationObserver(async o=>{for(const r of o)if("childList"===r.type){const o=Array.from(r.addedNodes),w=await i({type:n,value:s},o,t);if(w)return a.disconnect(),e(w)}});a.observe(t,{childList:!0,subtree:!0})})};
+      })();</script><script type="text/javascript" id="__tmpScript-383093507" data-added-by-two-seven="1">(function() {
+        
+    window.twoseven.reportError = function n(e,t,n){"string"==typeof(n=n||{})&&(n={message:n});const{message:o,stack:s}=t;Object.assign(n,{tag:e,error:{message:o,stack:s}}),window.tsExtGetPostToParent()({name:name,tag:e,action:"report-error",json:n}),console.error(JSON.stringify(n.error))}
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-593931337" data-added-by-two-seven="1">(function() {
+        
+    window.twosevenHmsToSecondsOnly = function(str) {
+        var p = str.split(':'),
+            s = 0, m = 1;
+
+        while (p.length > 0) {
+            s += m * parseInt(p.pop(), 10);
+            m *= 60;
+        }
+
+        return s;
+    }
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-718707478" data-added-by-two-seven="1">(function() {
+        window.twosevenExtLog = function(e,o,c){o||(o=e,e=void 0);let n=c||"black";if(c)switch(c){case"success":n="Green";break;case"info":n="DodgerBlue";break;case"error":n="Red";break;case"warning":n="Orange";break;default:n=c}e?console.log("%c"+e+": "+o,`color:${n}`):console.log("%c"+o,`color:${n}`)};
+      })();</script><script type="text/javascript" id="__tmpScript-304426477" data-added-by-two-seven="1">(function() {
+        
+    document.twosevenGET = function(url, callback) {
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+          if (xmlhttp.status == 200) {
+            callback(null, xmlhttp.responseText);
+          } else {
+            callback('something else other than 200 was returned', '');
+          }
+        }
+      };
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    };
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-880333317" data-added-by-two-seven="1">(function() {
+        
+    window.triggerEvent = function(e,t,n,o=!1){let s;o?(n&&"string"!=typeof n&&(n=JSON.stringify(n)),s=n):s={data:n},window.twosevenScriptsDiv&&n&&"object"==typeof n&&(console.warn(`WARNING: Attempting to send an object via event.detail from CS->Page does not work on Firefox: ${JSON.stringify(n)}`),console.error((new Error).stack));var i=new CustomEvent(t,{bubbles:!0,composed:!0,detail:s});e.dispatchEvent(i)}
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-736933596" data-added-by-two-seven="1">(function() {
+        window.twoseven.postTo = async function o(e,t,n=!1){let o;return t.name=t.name||name,o=n?new Promise(e=>{const n=`ack-${t.action}-${1e9*Math.random()|0}`;t.ack={event:n};window.debug&&["play","pause","currentTime"].some(e=>t.action.includes(e)),window.addEventListener("message",function t({data:o={}}){o.action===n&&(window.removeEventListener("message",t),e(o.json))})}):new Promise(e=>e()),e.postMessage(t,"*"),o};
+      })();</script><script type="text/javascript" id="__tmpScript-679846877" data-added-by-two-seven="1">(function() {
+        window.tsExtGetPostTo = function s(){return window.twoseven&&window.twoseven.postTo||window.postTo};
+      })();</script><script type="text/javascript" id="__tmpScript-803148015" data-added-by-two-seven="1">(function() {
+        window.tsExtGetPostToParent = function i(){return window.twoseven&&window.twoseven.postToParent||window.postToParent};
+      })();</script><script type="text/javascript" id="__tmpScript-321314477" data-added-by-two-seven="1">(function() {
+        window.twoseven.postResponse = async function a(e,t){const{source:n,data:{ack:{event:o}}}=e;window.tsExtGetPostTo()(n,{action:o,json:t})};
+      })();</script><script type="text/javascript" id="__tmpScript-800849833" data-added-by-two-seven="1">(function() {
+        window.twoseven.postToParent = async function r(e,t=!1){return window.tsExtGetPostTo()(window.parent,e,t)};
+      })();</script><script type="text/javascript" id="__tmpScript-550299653" data-added-by-two-seven="1">(function() {
+        window.twoseven.postToTop = async function w(e,t=!1){return window.tsExtGetPostTo()(window.top,e,t)};
+      })();</script><script type="text/javascript" id="__tmpScript-913618046" data-added-by-two-seven="1">(function() {
+        
+    window.twoseven.getFromStorage = e=>new Promise((t,n)=>{const o="get-from-storage-"+(1e9*Math.random()|0);window.addEventListener(o,e=>{window.removeEventListener(o,this);const{detail:{data:{value:n}}}=e;t(n)}),triggerEvent(window,"get-from-storage",{key:e,evt:o})})
+    window.twoseven.saveToStorage = e=>{triggerEvent(window,"save-to-storage",e)}
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-756609874" data-added-by-two-seven="1">(function() {
+        
+    window.attachHistoryListeners = function d(){var e=history.pushState;history.pushState=function(t,n,o){return"function"==typeof history.onpushstate&&history.onpushstate({state:t}),triggerEvent(window,"pushstate",{uri:o}),e.apply(history,arguments)};var t=history.replaceState;history.replaceState=function(e){return"function"==typeof history.onreplacestate&&history.onreplacestate({state:e}),t.apply(history,arguments)}}
+    window.attachHistoryListeners()
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-5001206" data-added-by-two-seven="1">(function() {
+        window.twoseven.once = function c(e,t,n){e.addEventListener(t,function o(s){e.removeEventListener(t,o),n(s)})};
+      })();</script><script type="text/javascript" id="__tmpScript-207290287" data-added-by-two-seven="1">(function() {
+        
+    window.twoseven.isOnTwoSevenTab = async () => {
+      const result = await window.twoseven.postTo(window, { action: 'is-on-twoseven-tab' }, true)
+      return result
+    }
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-936970455" data-added-by-two-seven="1">(function() {
+        
+    window.twoseven.isPaused = async () => {
+      const result = await window.twoseven.postTo(window, { action: 'twoseven:pause-state' }, true)
+      return result
+    }
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-78469091" data-added-by-two-seven="1">(function() {
+        window.twoseven = {};
+      })();</script><script type="text/javascript" id="__tmpScript-645424869" data-added-by-two-seven="1">(function() {
+        window.twoseven.waitForDOMNode = async function t(e,t=document){e=e||{};const{type:n,value:o}=e;if(!n||!o)throw new Error("Must specify identifier");let s=o;switch(n){case"tag":s=o.toUpperCase()}if("check"!==n){const e=await i({type:"selector",value:s},[],t);if(e)return new Promise(t=>t(e))}async function i({type:e,value:t},n,o){let s;switch(e){case"tag":s=n.find(e=>e.tagName===t);break;case"selector":s=o.querySelector(t);break;case"check":for(const e of n){if(await t(e))return e}}return s}return new Promise((e,o)=>{const a=new MutationObserver(async o=>{for(const r of o)if("childList"===r.type){const o=Array.from(r.addedNodes),w=await i({type:n,value:s},o,t);if(w)return a.disconnect(),e(w)}});a.observe(t,{childList:!0,subtree:!0})})};
+      })();</script><script type="text/javascript" id="__tmpScript-954909952" data-added-by-two-seven="1">(function() {
+        
+    window.twoseven.reportError = function n(e,t,n){"string"==typeof(n=n||{})&&(n={message:n});const{message:o,stack:s}=t;Object.assign(n,{tag:e,error:{message:o,stack:s}}),window.tsExtGetPostToParent()({name:name,tag:e,action:"report-error",json:n}),console.error(JSON.stringify(n.error))}
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-863830631" data-added-by-two-seven="1">(function() {
+        
+    window.twosevenHmsToSecondsOnly = function(str) {
+        var p = str.split(':'),
+            s = 0, m = 1;
+
+        while (p.length > 0) {
+            s += m * parseInt(p.pop(), 10);
+            m *= 60;
+        }
+
+        return s;
+    }
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-970936872" data-added-by-two-seven="1">(function() {
+        window.twosevenExtLog = function(e,o,c){o||(o=e,e=void 0);let n=c||"black";if(c)switch(c){case"success":n="Green";break;case"info":n="DodgerBlue";break;case"error":n="Red";break;case"warning":n="Orange";break;default:n=c}e?console.log("%c"+e+": "+o,`color:${n}`):console.log("%c"+o,`color:${n}`)};
+      })();</script><script type="text/javascript" id="__tmpScript-875721069" data-added-by-two-seven="1">(function() {
+        
+    document.twosevenGET = function(url, callback) {
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+          if (xmlhttp.status == 200) {
+            callback(null, xmlhttp.responseText);
+          } else {
+            callback('something else other than 200 was returned', '');
+          }
+        }
+      };
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    };
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-549226353" data-added-by-two-seven="1">(function() {
+        
+    window.triggerEvent = function(e,t,n,o=!1){let s;o?(n&&"string"!=typeof n&&(n=JSON.stringify(n)),s=n):s={data:n},window.twosevenScriptsDiv&&n&&"object"==typeof n&&(console.warn(`WARNING: Attempting to send an object via event.detail from CS->Page does not work on Firefox: ${JSON.stringify(n)}`),console.error((new Error).stack));var i=new CustomEvent(t,{bubbles:!0,composed:!0,detail:s});e.dispatchEvent(i)}
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-591489670" data-added-by-two-seven="1">(function() {
+        window.twoseven.postTo = async function o(e,t,n=!1){let o;return t.name=t.name||name,o=n?new Promise(e=>{const n=`ack-${t.action}-${1e9*Math.random()|0}`;t.ack={event:n};window.debug&&["play","pause","currentTime"].some(e=>t.action.includes(e)),window.addEventListener("message",function t({data:o={}}){o.action===n&&(window.removeEventListener("message",t),e(o.json))})}):new Promise(e=>e()),e.postMessage(t,"*"),o};
+      })();</script><script type="text/javascript" id="__tmpScript-225979105" data-added-by-two-seven="1">(function() {
+        window.tsExtGetPostTo = function s(){return window.twoseven&&window.twoseven.postTo||window.postTo};
+      })();</script><script type="text/javascript" id="__tmpScript-229941437" data-added-by-two-seven="1">(function() {
+        window.tsExtGetPostToParent = function i(){return window.twoseven&&window.twoseven.postToParent||window.postToParent};
+      })();</script><script type="text/javascript" id="__tmpScript-158986111" data-added-by-two-seven="1">(function() {
+        window.twoseven.postResponse = async function a(e,t){const{source:n,data:{ack:{event:o}}}=e;window.tsExtGetPostTo()(n,{action:o,json:t})};
+      })();</script><script type="text/javascript" id="__tmpScript-854542348" data-added-by-two-seven="1">(function() {
+        window.twoseven.postToParent = async function r(e,t=!1){return window.tsExtGetPostTo()(window.parent,e,t)};
+      })();</script><script type="text/javascript" id="__tmpScript-671497267" data-added-by-two-seven="1">(function() {
+        window.twoseven.postToTop = async function w(e,t=!1){return window.tsExtGetPostTo()(window.top,e,t)};
+      })();</script><script type="text/javascript" id="__tmpScript-836554605" data-added-by-two-seven="1">(function() {
+        
+    window.twoseven.getFromStorage = e=>new Promise((t,n)=>{const o="get-from-storage-"+(1e9*Math.random()|0);window.addEventListener(o,e=>{window.removeEventListener(o,this);const{detail:{data:{value:n}}}=e;t(n)}),triggerEvent(window,"get-from-storage",{key:e,evt:o})})
+    window.twoseven.saveToStorage = e=>{triggerEvent(window,"save-to-storage",e)}
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-287858272" data-added-by-two-seven="1">(function() {
+        
+    window.attachHistoryListeners = function d(){var e=history.pushState;history.pushState=function(t,n,o){return"function"==typeof history.onpushstate&&history.onpushstate({state:t}),triggerEvent(window,"pushstate",{uri:o}),e.apply(history,arguments)};var t=history.replaceState;history.replaceState=function(e){return"function"==typeof history.onreplacestate&&history.onreplacestate({state:e}),t.apply(history,arguments)}}
+    window.attachHistoryListeners()
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-433787219" data-added-by-two-seven="1">(function() {
+        window.twoseven.once = function c(e,t,n){e.addEventListener(t,function o(s){e.removeEventListener(t,o),n(s)})};
+      })();</script><script type="text/javascript" id="__tmpScript-162505037" data-added-by-two-seven="1">(function() {
+        
+    window.twoseven.isOnTwoSevenTab = async () => {
+      const result = await window.twoseven.postTo(window, { action: 'is-on-twoseven-tab' }, true)
+      return result
+    }
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-920909008" data-added-by-two-seven="1">(function() {
+        
+    window.twoseven.isPaused = async () => {
+      const result = await window.twoseven.postTo(window, { action: 'twoseven:pause-state' }, true)
+      return result
+    }
+  ;
+      })();</script><script type="text/javascript" id="__tmpScript-206968899" data-added-by-two-seven="1">(function() {
+        
+      const modal = document.querySelector('.twoseven-ext-tab-media-modal')
+      const modalCloseBtn = modal.querySelector('.close')
+      function closeModal () {
+        modal.style.display = 'none'
+        const frame = document.querySelector('#twoseven-ext-tab-media-iframe').contentWindow
+        frame.postMessage({
+          __evt_name: 'modal-hide'
+        }, '*')
+      }
+      modalCloseBtn.onclick = closeModal
+
+      window.onmessage = function (e) {
+        if (e.data.__evt_name === 'modal-hide') {
+          closeModal()
+        }
+      }
+
+      window.twoseven.closeTabMediaModal = closeModal
+
+      window.onclick = function (e) {
+        if (e.target.id === 'twoseven-ext-tab-media-modal' && modal.style.display === 'block') {
+            closeModal()
+        }
+      }
+    ;
+      })();</script></div><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>Your Luck Branding Order</title>
+   
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <!--[if (gte mso 9)|(IE)]>
+		<style type="text/css">
+			body, div, table, td, span, a, p {font-family: Arial, Helvetica, sans-serif !important; }
+		</style>
+	<![endif]-->
+
+   <!-- Global site tag (gtag.js) - Google Analytics -->
+   <script async="" src="./Your Luck Branding Order_files/js"></script>
+   <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-4R9RM4QM34');
+   </script>
+   <!-- End of Global site tag (gtag.js) - Google Analytics -->
+
+   <!-- Hotjar Tracking Code for https://delo.dev/ -->
+   <script>
+      (function(h,o,t,j,a,r){
+         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+         h._hjSettings={hjid:2968037,hjsv:6};
+         a=o.getElementsByTagName('head')[0];
+         r=o.createElement('script');r.async=1;
+         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+         a.appendChild(r);
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+   </script><script async="" src="./Your Luck Branding Order_files/hotjar-2968037.js.download"></script>
+   <!-- End of Hotjar Tracking Code -->
+
+   <style type="text/css">
+      /* CLIENT SPECIFIC STYLES */
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+      img { -ms-interpolation-mode: bicubic; }
+
+      /* RESET STYLES */
+      img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+      table { border-collapse: collapse !important; }
+      body { height: 100% !important; Margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+      /* IOS BLUE LINKS */
+      a[x-apple-data-detectors] {
+         color: inherit !important;
+         text-decoration: none !important;
+         font-size: inherit !important;
+         font-family: inherit !important;
+         font-weight: inherit !important;
+         line-height: inherit !important;
+      }
+
+      /* GMAIL BLUE LINKS */
+      u + #body a {
+         color: inherit;
+         text-decoration: none;
+         font-size: inherit;
+         font-family: inherit;
+         font-weight: inherit;
+         line-height: inherit;
+      }
+
+      @media only screen and (max-width: 600px) {
+         .responsive-table {
+            width: 480px !important;
+         }
+
+         .image {
+            width: 100% !important;
+            height: auto !important;
+         }
+
+         .db {
+            display: block !important;
+            text-align: center !important;
+         }
+
+         .dw {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+         }
+      }
+
+      @media only screen and (max-width: 480px) {
+         .responsive-table {
+            width: 95% !important;
+         }
+      }
+   </style>
+<link href="chrome-extension://cjdnfmjmdligcpfcekfmenlhiopehjkd/web_resources/modal/modal.css" rel="stylesheet" id="__tmpStyle"><script async="" src="./Your Luck Branding Order_files/modules.90de377b639fd5b933d2.js.download" charset="utf-8"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style></head>
+
+<body id="body" style="Margin: 0 !important; padding: 0 !important; background-color: #FAFAFA; font-family: Arial, Helvetica, sans-serif; font-size: 18px; line-height: 1.2; color: #000000;">
+   <!-- START OF PREVIEW TEXT -->
+   <div style="display: none; max-height: 0; overflow: hidden;">
+      Your Luck Branding Order #12345678 Has Been Shipped...
+   </div>
+   <div style="display: none; max-height: 0; overflow: hidden;">
+      &nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌
+   </div>
+   <!-- END OF PREVIEW TEXT -->
+
+   <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody><tr>
+         <td align="center" style="padding: 30px 0px;">
+            <!-- START OF HTML EMAIL (600PX WIDE) -->
+            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="600" style="background-color: #FFFFFF;" class="responsive-table">
+               <!-- START OF HEADER LOGO -->
+               <tbody><tr>
+                  <td align="center" style="padding-top: 20px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody><tr>
+                           <td align="center">
+                              <a href="https://example.com/" target="_blank">
+                                 <img src="./Your Luck Branding Order_files/lb-logo.jpeg" alt="Luck Branding Logo" width="240" style="display: block; border: none;">
+                              </a>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF HEADER LOGO -->
+
+               <!-- START OF SHIPPING CONFIRMATION -->
+               <tr>
+                  <td align="center" style="padding: 25px 0px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody><tr>
+                           <td align="center" bgcolor="#F5F4ED" style="color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; line-height: 22px; text-transform: uppercase; letter-spacing: 2px; padding: 15px 0px;">
+                              <h2 style="Margin: 0;">
+                                 Shipping Confirmation
+                              </h2>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF SHIPPING CONFIRMATION -->
+
+               <!-- START OF YOUR ORDER IS ON THE WAY -->
+               <tr>
+                  <td align="center">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody><tr>
+                           <td align="center" style="color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; line-height: 1.3; text-transform: uppercase;">
+                              <h1 style="Margin: 0;">
+                                 Your order <br> 
+                                 is on the way!
+                              </h1>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF YOUR ORDER IS ON THE WAY -->
+
+               <!-- START OF ORDER NUMBER -->
+               <tr>
+                  <td align="center" style="padding-top: 15px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody><tr>
+                           <td align="center" style="color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 20px;">
+                              <p style="Margin: 0;">
+                                 Order number #12345678 has shipped! <br>
+                                 See below for package tracking information.
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF ORDER NUMBER -->
+
+               <!-- START OF TRACK PACKAGE BUTTON -->
+               <tr>
+                  <td align="center" style="padding-top: 20px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody><tr>
+                           <td align="center">
+                              <a href="https://example.com/" target="_blank" style="font-size: 14px; font-family: Arial, Helvetica, sans-serif; color: #FFFFFF; text-decoration: none; border-radius: 0px; -webkit-border-radius: 0px; background-color: #000000; border-top: 10px solid #000000; border-bottom: 10px solid #000000; border-right: 30px solid #000000; border-left: 30px solid #000000; display: inline-block; text-transform: uppercase;">Track Package</a>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF TRACK PACKAGE BUTTON -->
+
+               <!-- START OF ORDER SUMMARY TITLE -->
+               <tr>
+                  <td align="center" style="padding-top: 30px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                        <tbody><tr>
+                           <td align="center" style="color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; text-transform: uppercase; letter-spacing: 2px;">
+                              <h2 style="Margin: 0;">
+                                 Order Summary
+                              </h2>
+                           </td>
+                        </tr>
+
+                        <tr>
+                           <td style="padding-top: 10px;">
+                              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                 <tbody><tr>
+                                    <td height="2" style="background-color: #000000;"></td>
+                                 </tr>
+                              </tbody></table>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF ORDER SUMMARY TITLE -->
+
+               <!-- START OF ORDER SUMMARY DETAILS -->
+               <tr>
+                  <td align="center" style="padding-top: 10px;">
+                     <table class="responsive-table" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="540">
+                        <tbody><tr>
+                           <td width="260" class="dw db">
+                              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                                 <tbody><tr>
+                                    <td align="left" class="dw db">
+                                       <h2 style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; line-height: 28px; text-transform: uppercase; letter-spacing: 2px;">
+                                          Shipping Address
+                                       </h2>
+                                    </td>
+                                 </tr>
+
+                                 <tr>
+                                    <td align="left" class="dw db">
+                                       <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; text-transform: uppercase;">
+                                          John Doe
+                                       </p>
+
+                                       <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px;">
+                                          1234 S 321th Road <br>
+                                          Miami, Florida 39101 <br>
+                                          USA
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody></table>
+                           </td>
+
+                           <td width="20" height="20" class="dw db">
+                              &nbsp;
+                           </td>
+
+                           <td width="260" class="dw db">
+                              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                                 <tbody><tr>
+                                    <td align="right" class="dw db">
+                                       <h2 style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; line-height: 28px; text-transform: uppercase; letter-spacing: 2px;">
+                                          Billing Address
+                                       </h2>
+                                    </td>
+                                 </tr>
+
+                                 <tr>
+                                    <td align="right" class="dw db">
+                                       <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; text-transform: uppercase;">
+                                          John Doe
+                                       </p>
+
+                                       <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px;">
+                                          1234 S 321th Road <br>
+                                          Miami, Florida 39101 <br>
+                                          USA
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody></table>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF ORDER SUMMARY DETAILS -->
+
+               <!-- START OF PAYMENT INFORMATION -->
+               <tr>
+                  <td align="center" style="padding-top: 20px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody><tr>
+                           <td align="center">
+                              <h2 style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; line-height: 28px; text-transform: uppercase; letter-spacing: 2px;">
+                                 Payment Method
+                              </h2>
+
+                              <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; padding-top: 5px;">
+                                 PayPal
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF PAYMENT INFORMATION -->
+
+               <!-- START OF YOUR ITEMS TITLE -->
+               <tr>
+                  <td align="center" style="padding-top: 30px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                        <tbody><tr>
+                           <td align="center" style="color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; text-transform: uppercase; letter-spacing: 2px;">
+                              <h2 style="Margin: 0;">
+                                 Your Items
+                              </h2>
+                           </td>
+                        </tr>
+
+                        <tr>
+                           <td style="padding-top: 10px;">
+                              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                 <tbody><tr>
+                                    <td height="2" style="background-color: #000000;"></td>
+                                 </tr>
+                              </tbody></table>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF YOUR ITEMS TITLE -->
+
+               <!-- START OF YOUR ITEMS DETAILS -->
+               <tr>
+                  <td align="center" style="padding-top: 10px;">
+                     <table class="responsive-table" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="540">
+                        <tbody><tr>
+                           <td width="130" class="dw db">
+                              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="130">
+                                 <tbody><tr>
+                                    <td align="left" class="dw db">
+                                       <a href="https://example.com/" target="_blank">
+                                          <img class="image" src="./Your Luck Branding Order_files/flannel-shirt.jpeg" alt="Flannel Shirt" width="130" style="display: block; border: none;">
+                                       </a>
+                                    </td>
+                                 </tr>
+                              </tbody></table>
+                           </td>
+
+                           <td width="20" height="20" class="dw db">
+                              &nbsp;
+                           </td>
+
+                           <td width="390" valign="top" class="dw db">
+                              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                 <tbody><tr>
+                                    <td align="left" class="dw db">
+                                       <a href="https://example.com/" target="_blank" style="text-decoration: none;">
+                                          <h2 style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; line-height: 28px; text-transform: uppercase; letter-spacing: 2px;">
+                                             Plaid Workwear Cloud Flannel
+                                          </h2>
+                                       </a>
+                                    </td>
+                                 </tr>
+
+                                 <tr>
+                                    <td align="left" class="dw db">
+                                       <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px;">
+                                          Item #: 123456789123 <br>
+                                          Style: 1A123456 <br>
+                                          Color: BLACK / NATURAL COMBO <br>
+                                          Quantity: 1
+                                       </p>
+
+                                       <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; padding-top: 10px;">
+                                          Price: $55.65
+                                       </p>
+                                    </td>
+                                 </tr>
+                              </tbody></table>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF YOUR ITEMS DETAILS -->
+
+               <!-- START OF BORDER -->
+               <tr>
+                  <td style="padding-top: 10px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                        <tbody><tr>
+                           <td height="2" style="background-color: #000000;"></td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF BORDER -->
+
+               <!-- START OF TRANSACTION COST -->
+               <tr>
+                  <td align="center" style="padding-top: 10px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                        <tbody><tr>
+                           <td align="left" width="70%">
+                              <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; padding-top: 10px; padding-left: 10px;">
+                                 Subtotal
+                              </p>
+                           </td>
+
+                           <td align="right" width="30%">
+                              <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; padding-top: 10px; padding-right: 10px;">
+                                 $55.65
+                              </p>
+                           </td>
+                        </tr>
+
+                        <tr>
+                           <td align="left" width="70%">
+                              <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; padding-top: 10px; padding-left: 10px; text-transform: capitalize;">
+                                 Shipping Standard
+                              </p>
+                           </td>
+
+                           <td align="right" width="30%">
+                              <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; padding-top: 10px; padding-right: 10px;">
+                                 $10.00
+                              </p>
+                           </td>
+                        </tr>
+
+                        <tr>
+                           <td align="left" width="70%">
+                              <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; padding-top: 10px; padding-left: 10px; text-transform: capitalize;">
+                                 Sales Tax
+                              </p>
+                           </td>
+
+                           <td align="right" width="30%">
+                              <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; padding-top: 10px; padding-right: 10px;">
+                                 $0.00
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF TRANSACTION COST -->
+
+               <!-- START OF BORDER -->
+               <tr>
+                  <td style="padding-top: 20px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                        <tbody><tr>
+                           <td height="2" style="background-color: #000000;"></td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF BORDER -->
+
+               <!-- START OF TOTAL COST -->
+               <tr>
+                  <td align="center" style="padding-top: 10px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                        <tbody><tr>
+                           <td align="left" width="70%">
+                              <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; line-height: 1; text-transform: uppercase; padding-top: 10px; padding-left: 10px;">
+                                 Total
+                              </p>
+                           </td>
+
+                           <td align="right" width="30%">
+                              <p style="Margin: 0; color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; line-height: 1; padding-top: 10px; padding-right: 10px;">
+                                 $65.65
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF TOTAL COST -->
+
+               <!-- START OF THANK YOU -->
+               <tr>
+                  <td align="center" style="padding-top: 30px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                        <tbody><tr>
+                           <td bgcolor="#000000" align="center" style="color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; line-height: 22px; text-transform: uppercase; letter-spacing: 2px;">
+                              <h2 style="Margin: 0; padding: 20px 0px;">
+                                 Thank You For Shopping With Us!
+                              </h2>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF THANK YOU -->
+
+               <!-- START OF EMAIL WAS SENT TO -->
+               <tr>
+                  <td align="center" style="padding-top: 20px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody><tr>
+                           <td align="center" style="color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: normal; line-height: 20px;">
+                              <p style="Margin: 0;">
+                                 This email was sent to josephhughescode@gmail.com
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF EMAIL WAS SENT TO -->
+
+               <!-- START OF CONTACT US -->
+               <tr>
+                  <td align="center" style="padding-top: 10px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="90%">
+                        <tbody><tr>
+                           <td width="50" align="right" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: normal; line-height: 20px;">
+                              <a style="color: #1B1715;" href="https://example.com/" target="_blank">
+                                 Contact Us
+                              </a>
+                           </td>
+
+                           <td width="5" height="20">
+                              &nbsp;
+                           </td>
+
+                           <td width="50" align="left" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: normal; line-height: 20px;">
+                              <a style="color: #1B1715;" href="https://example.com/" target="_blank">
+                                 Privacy Policy 
+                              </a>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF CONTACT US -->
+
+               <!-- START OF ADDRESS -->
+               <tr>
+                  <td align="center" style="padding: 15px 0px 20px 0px;">
+                     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody><tr>
+                           <td align="center" style="color: #1B1715; font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: normal; line-height: 20px;">
+                              <p style="Margin: 0;">
+                                 Luck Branding LLC | 1234 N Story Road | Los Angeles, CA 90031 | United States
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody></table>
+                  </td>
+               </tr>
+               <!-- END OF ADDRESS -->
+            </tbody></table>
+            <!-- END OF HTML EMAIL (600PX WIDE) -->
+         </td>
+      </tr>
+   </tbody></table>
+
+<div>
+    <div id="twoseven-ext-tab-media-modal" class="twoseven-ext-tab-media-modal" style="display: none;">
+      <!-- Modal content -->
+      <div class="twoseven-ext-tab-media-modal-content">
+        <div class="iframe-container" style="height: 100%; width: 100%;">
+          <span class="close">×</span>
+        </div>
+      </div>
+    </div></div><iframe id="_hjSafeContext_55088386" src="./Your Luck Branding Order_files/saved_resource.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe><iframe name="_hjRemoteVarsFrame" title="_hjRemoteVarsFrame" id="_hjRemoteVarsFrame" src="./Your Luck Branding Order_files/box-5e66f98b4ee957db209dc6f63e3d59dd.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe></body></html>
